@@ -1,8 +1,9 @@
-package errors
+package selferr
 
 import (
 	"fmt"
 	"net/http"
+	"runtime/debug"
 )
 
 type Error struct {
@@ -12,6 +13,17 @@ type Error struct {
 
 func (this Error) Error() string {
 	return fmt.Sprintf("%d:%s", this.Code, this.Msg)
+}
+
+func (this Error) Stack() Error {
+	stack := debug.Stack()
+	content := this.Msg + "\n\n"
+	content += "=================堆栈异常===============\n\n"
+	content += string(stack)
+	content += "\n"
+	this.Msg = content
+
+	return this
 }
 
 // 400
