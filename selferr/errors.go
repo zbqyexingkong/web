@@ -26,6 +26,16 @@ func (this Error) Stack() Error {
 	return this
 }
 
+func Stack(msg string) Error {
+	stack := debug.Stack()
+	content := msg + "\n\n"
+	content += "=================堆栈异常===============\n\n"
+	content += string(stack)
+	content += "\n"
+
+	return _build(http.StatusInternalServerError, "internal server error", content...)
+}
+
 // 400
 func BadRequestError(msg ...string) Error {
 	return _build(http.StatusBadRequest, "bad request", msg...)
