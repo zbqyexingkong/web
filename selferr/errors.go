@@ -33,7 +33,7 @@ func Stack(msg string) Error {
 	content += string(stack)
 	content += "\n"
 
-	return _build(http.StatusInternalServerError, "internal server error", content...)
+	return _build(http.StatusInternalServerError, "internal server error", content)
 }
 
 // 400
